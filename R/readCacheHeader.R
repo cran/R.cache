@@ -1,0 +1,123 @@
+#########################################################################/**
+# @RdocDefault readCacheHeader
+#
+# @title "Loads data from file cache"
+#
+# \description{
+#  @get "title", which is unique for an optional key object.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{file}{A filename or a @connection.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a named @list structure with element \code{identifier},
+#   \code{version}, \code{comment} (optional), \code{sources} (optional),
+#   and \code{timestamp}.
+# }
+#
+# @author
+#
+# @examples "../incl/readCacheHeader.Rex"
+#
+# \seealso{
+#  @see "findCache".
+#  @see "loadCache".
+#  @see "saveCache".
+# }
+#
+# @keyword "programming"
+# @keyword "IO"
+#*/######################################################################### 
+setMethodS3("readCacheHeader", "default", function(file, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Load functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Same a base::load(), but it does not open a gzcon() connection, which
+  # cause problem because that reset file connections to position zero.
+  baseLoad <- function(con, envir=parent.frame()) {
+    magic <- readChar(con, 5);
+    if (regexpr("RD[AX]2\n", magic) == -1) {
+      if (regexpr("RD[ABX][12]\r", magic) == 1) {
+        stop("input has been corrupted, with LF replaced by CR");
+      } else {
+        stop("the input does not start with a magic number compatible with loading from a connection");
+      }
+    } else {
+      .Internal(loadFromConn(con, envir));
+    }
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Validate arguments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Argument 'file':
+  if (inherits(file, "connection")) {
+  } else {
+    file <- as.character(file);
+    if (!isFile(file))
+      throw("Argument 'file' is not an existing file: ", file);
+
+    file <- file(file, open="rb");
+    on.exit({
+      if (!is.null(file))
+        close(file);
+    });
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Try to load cached object from file connection
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  header <- list();
+
+  # 1a. Load identifier:
+  header$identifier <- readChar(con=file, nchars=64);
+  pattern <- "^Rcache v([0-9][0-9]*[.][0-9][0-9]*([.][0-9][0-9]*)*).*";
+  if (regexpr(pattern, header$identifier) == -1) {
+    throw("Rcache file format error. Invalid identifier: ", file);
+  }
+
+  # 1b. Get version
+  header$version <- gsub(pattern, "\\1", header$identifier);
+
+  # 1c. Read trailing '\0'.
+  dummy <- readBin(con=file, what=integer(), size=1, n=1);
+
+  # 2a. Load comment
+  if (compareVersion(header$version, "0.1") > 0) {
+    nchars <- readBin(con=file, what=integer(), size=4, n=1);
+    header$comment <- readChar(con=file, nchars=nchars);
+  }
+
+  # 2b. Read trailing '\0'.
+  dummy <- readBin(con=file, what=integer(), size=1, n=1);
+
+  # 3. Load sources:
+  vars <- baseLoad(con=file, ...);
+  if (!identical(vars, "sources")) {
+    throw("Rcache file format error. Expected 'sources' object: ", 
+                                                paste(vars, collapse=", "));
+  }
+  header$sources <- sources;
+
+  # 4. Load timestamp:
+  vars <- baseLoad(con=file, ...);
+  if (!identical(vars, "timestamp")) {
+    throw("Rcache file format error. Expected 'timestamp' object: ", 
+                                                paste(vars, collapse=", "));
+  }
+  header$timestamp <- timestamp;
+
+  header;
+})
+
+
+############################################################################
+# HISTORY:
+# 2006-04-04
+# o Created.
+############################################################################
