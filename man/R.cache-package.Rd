@@ -81,6 +81,11 @@
  already implemented by downloading the latest "devel" version!
 }
 
+\section{Related work}{
+ See also the \pkg{filehash} package, and the \code{cache()} function
+ in the \pkg{Biobase} package of Bioconductor.
+}
+
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \section{License}{

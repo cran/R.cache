@@ -1,7 +1,7 @@
 #########################################################################/**
 # @RdocDefault generateCache
 #
-# @title "Generates a cache pathname from a key list object"
+# @title "Generates a cache pathname from a key object"
 #
 # \description{
 #  @get "title".
@@ -10,8 +10,9 @@
 # @synopsis
 #
 # \arguments{
-#   \item{key}{An object from which a hexadecimal hash code will be 
-#     generated and appended to the filename.}
+#   \item{key}{A @list or an @environment from which a hexadecimal 
+#     key will be generated and that will constitute the name part of
+#     the cache filename.}
 #   \item{suffix}{A @character string to be appended to the end of the
 #     filename.}
 #   \item{...}{Arguments passed to @see "getCachePath".}
@@ -36,8 +37,10 @@ setMethodS3("generateCache", "default", function(key=NULL, suffix=".Rcache", ...
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'key':
   if (!is.null(key)) {
-    if (!is.list(key))
-      throw("Argument 'key' must be a list or NULL: ", class(key)[1]);
+    if (!is.list(key) && !is.environment(key)) {
+      throw("Argument 'key' must be a list, an environment or NULL: ", 
+                                                            class(key)[1]);
+    }
 
     # Using key object requires the CRAN package 'digest'.
     require(digest) || throw("Package not loaded: digest");
@@ -47,7 +50,7 @@ setMethodS3("generateCache", "default", function(key=NULL, suffix=".Rcache", ...
   # Generate cache name from hash code of key object
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(key)) {
-    hashCode <- digest(key);
+    hashCode <- digest::digest(key);
     cacheName <- hashCode;
   }
 
@@ -65,6 +68,8 @@ setMethodS3("generateCache", "default", function(key=NULL, suffix=".Rcache", ...
 
 ############################################################################
 # HISTORY:
+# 2007-07-02
+# o Added support for argument 'key' is an environment.
 # 2005-12-09
 # o Removed 'file' argument.
 # 2005-12-06

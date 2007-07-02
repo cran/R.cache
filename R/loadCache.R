@@ -128,6 +128,7 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
     }
 
     # 4. Load cached object:
+    object <- NULL;  # To please 'codetools' in R v2.6.0
     vars <- baseLoad(con=fh, ...);  # 'vars' holds names of loaded objects
     if (!identical(vars, "object")) {
       throw("Rcache file format error. Expected 'object' object: ", 

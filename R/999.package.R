@@ -54,6 +54,11 @@
 #  already implemented by downloading the latest "devel" version!
 # }
 #
+# \section{Related work}{
+#  See also the \pkg{filehash} package, and the \code{cache()} function
+#  in the \pkg{Biobase} package of Bioconductor.
+# }
+#
 # @author
 #
 # \section{License}{

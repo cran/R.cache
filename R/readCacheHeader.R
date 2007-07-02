@@ -97,6 +97,7 @@ setMethodS3("readCacheHeader", "default", function(file, ...) {
   dummy <- readBin(con=file, what=integer(), size=1, n=1);
 
   # 3. Load sources:
+  sources <- NULL;  # To please 'codetools' in R v2.6.0
   vars <- baseLoad(con=file, ...);
   if (!identical(vars, "sources")) {
     throw("Rcache file format error. Expected 'sources' object: ", 

@@ -10,17 +10,18 @@
 \alias{generateCache.default}
 \alias{generateCache}
 
-\title{Generates a cache pathname from a key list object}
+\title{Generates a cache pathname from a key object}
 
 \description{
- Generates a cache pathname from a key list object.
+ Generates a cache pathname from a key object.
 }
 
 \usage{\method{generateCache}{default}(key=NULL, suffix=".Rcache", ...)}
 
 \arguments{
-  \item{key}{An object from which a hexadecimal hash code will be
-    generated and appended to the filename.}
+  \item{key}{A \code{\link[base]{list}} or an \code{\link[base]{environment}} from which a hexadecimal
+    key will be generated and that will constitute the name part of
+    the cache filename.}
   \item{suffix}{A \code{\link[base]{character}} string to be appended to the end of the
     filename.}
   \item{...}{Arguments passed to \code{\link{getCachePath}}().}
