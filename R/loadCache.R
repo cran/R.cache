@@ -101,21 +101,23 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
     if (!is.null(sources))
       header$sources <- sources;
 
-    attachLocally(header);
+    timestamp <- NULL;
+    attachLocally(header);  # Attaches 'timestamp' (and 'sources')
+
     if (!is.null(timestamp) && !is.null(sources)) {
-      for (pathname in sources) {
+      for (sourcePathname in sources) {
         if (!is.character(sources)) {
           warning("No timestamp check of cache was performed. Unsupported type of cache source: ", class(sources)[1]);
           break;
         }
 
-        if (!file.exists(pathname)) {
-          warning("No timestamp check of cache was performed. Source file not found: ", pathname);
+        if (!file.exists(sourcePathname)) {
+          warning("No timestamp check of cache was performed. Source file not found: ", sourcePathname);
           break;
         }
 
         # Is source file newer than cache?
-        lastModified <- file.info(pathname)$mtime;
+        lastModified <- file.info(sourcePathname)$mtime;
         if (lastModified > timestamp) {
           # Remove out-of-date cache file?
           if (removeOldCache) {
@@ -124,18 +126,25 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
           }
           return(NULL);
         }
-      } # for (pathname in sources)
+      } # for (sourcePathname in sources)
     }
 
     # 4. Load cached object:
     object <- NULL;  # To please 'codetools' in R v2.6.0
     vars <- baseLoad(con=fh, ...);  # 'vars' holds names of loaded objects
     if (!identical(vars, "object")) {
-      throw("Rcache file format error. Expected 'object' object: ", 
-                                                paste(vars, collapse=", "));
+      throw("Rcache file format error ('", pathname, 
+            "'). Expected 'object' object: ", paste(vars, collapse=", "));
     }
 
-    # 5. Return cached object
+    # 5. Update the "last-modified" timestamp of the cache file?
+    touch <- getOption("R.cache::touchOnLoad");
+    touch <- identical(touch, TRUE);
+    if (touch) {
+      touchFile(pathname);
+    }
+
+    # 6. Return cached object
     return(object);
   }, error = function(ex) {
      print(ex);
@@ -147,6 +156,11 @@ setMethodS3("loadCache", "default", function(key=NULL, sources=NULL, suffix=".Rc
 
 ############################################################################
 # HISTORY:
+# 2008-02-27
+# o Added option to updated the "last-modified" timestamp of cache files
+#   whenever they are loaded via loadCache().
+# 2008-02-14
+# o Now errors reports the pathname, if available.
 # 2006-08-09
 # o Added link to cache() in Biobase.
 # 2006-05-25

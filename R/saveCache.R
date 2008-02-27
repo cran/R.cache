@@ -60,8 +60,8 @@ setMethodS3("saveCache", "default", function(object, key=NULL, sources=NULL, suf
   fh <- file(pathname, open="wb");
   on.exit(close(fh));
 
-  # Save 'identifier' 
-  identifier <- "Rcache v0.1.3 (R package R.cache by Henrik Bengtsson)";
+  # Save 'identifier'
+  identifier <- "Rcache v0.1.7 (R package R.cache by Henrik Bengtsson)";
   if (nchar(identifier) > 64)
     throw("Internal error. Identifier is too long: ", identifier);
   tail <- paste(rep(" ", 64-nchar(identifier)), collapse="");

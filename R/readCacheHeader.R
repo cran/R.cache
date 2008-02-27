@@ -57,12 +57,13 @@ setMethodS3("readCacheHeader", "default", function(file, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Argument 'file':
   if (inherits(file, "connection")) {
+    pathname <- NULL;
   } else {
-    file <- as.character(file);
-    if (!isFile(file))
-      throw("Argument 'file' is not an existing file: ", file);
+    pathname <- as.character(file);
+    if (!isFile(pathname))
+      throw("Argument 'file' is not an existing file: ", pathname);
 
-    file <- file(file, open="rb");
+    file <- file(pathname, open="rb");
     on.exit({
       if (!is.null(file))
         close(file);
@@ -78,7 +79,8 @@ setMethodS3("readCacheHeader", "default", function(file, ...) {
   header$identifier <- readChar(con=file, nchars=64);
   pattern <- "^Rcache v([0-9][0-9]*[.][0-9][0-9]*([.][0-9][0-9]*)*).*";
   if (regexpr(pattern, header$identifier) == -1) {
-    throw("Rcache file format error. Invalid identifier: ", file);
+    throw("Rcache file format error ('", pathname, 
+          "'). Invalid identifier: ", header$identifier);
   }
 
   # 1b. Get version
@@ -100,16 +102,16 @@ setMethodS3("readCacheHeader", "default", function(file, ...) {
   sources <- NULL;  # To please 'codetools' in R v2.6.0
   vars <- baseLoad(con=file, ...);
   if (!identical(vars, "sources")) {
-    throw("Rcache file format error. Expected 'sources' object: ", 
-                                                paste(vars, collapse=", "));
+    throw("Rcache file format error ('", pathname, 
+          "'). Expected 'sources' object: ", paste(vars, collapse=", "));
   }
   header$sources <- sources;
 
   # 4. Load timestamp:
   vars <- baseLoad(con=file, ...);
   if (!identical(vars, "timestamp")) {
-    throw("Rcache file format error. Expected 'timestamp' object: ", 
-                                                paste(vars, collapse=", "));
+    throw("Rcache file format error ('", pathname, 
+          "'). Expected 'timestamp' object: ", paste(vars, collapse=", "));
   }
   header$timestamp <- timestamp;
 
@@ -119,6 +121,9 @@ setMethodS3("readCacheHeader", "default", function(file, ...) {
 
 ############################################################################
 # HISTORY:
+# 2008-02-14
+# o BUG FIX: The throw() for invalid identifiers was trying to put the
+#   connection object is the out and not the identifier.
 # 2006-04-04
 # o Created.
 ############################################################################
