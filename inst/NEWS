@@ -2,6 +2,16 @@
 Package: R.cache
 ===============
 
+Version: 0.1.8 [2009-08-11]
+o ROBUSTNESS: Added sanity check to readCacheHeader() testing 
+  that the read header identifier is non-empty.  This results
+  in a clearer error message that before.
+o Now readCacheHeader() reports the "pathname" in error/warnings
+  messages, if argument 'file' refers to a file and the 
+  "description" if it refers to a connection.
+o CLEAN UP: Renamed the HISTORY file to NEWS.
+
+
 Version: 0.1.7 [2008-02-27]
 o Added option to updated the "last-modified" timestamp of cache 
   files whenever they are loaded via loadCache(). This will help
@@ -9,7 +19,7 @@ o Added option to updated the "last-modified" timestamp of cache
   To turn this on, use options("R.cache::touchOnLoad"=TRUE).
 o Now error messages specifies the pathname, if available.
 o BUG FIX: The throw() for invalid identifiers was trying to put 
-  the connection object is the out and not the identifier.
+  the connection object in the output and not the identifier.
 
 
 Version: 0.1.6 [2007-07-02]
