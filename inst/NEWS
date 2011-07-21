@@ -2,6 +2,12 @@
 Package: R.cache
 ===============
 
+Version: 0.4.3 [2011-07-21]
+o DOCUMENTATION: Made it more explicit that it is the 
+  root path of the cache file directories that are referred
+  to when writing "root path".
+
+
 Version: 0.4.2 [2011-05-19]
 o Added a help page to clearCache().
 o Now argument 'prompt' for clearCache() defaults to TRUE
