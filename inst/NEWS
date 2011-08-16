@@ -2,10 +2,16 @@
 Package: R.cache
 ===============
 
+Version: 0.5.0 [2011-08-16]
+o Added support for saving and loaded compressed cache files.
+o ROBUSTNESS: Now findCache() asserts that any identified cache 
+  file is really a file.
+o CLEANUP: Now package uses packageStartupMessage() instead of cat().
+
+
 Version: 0.4.3 [2011-07-21]
-o DOCUMENTATION: Made it more explicit that it is the 
-  root path of the cache file directories that are referred
-  to when writing "root path".
+o DOCUMENTATION: Clarified how argument 'dirs' (in methods using it)
+  specifies the subdirectory of the cache root directory.
 
 
 Version: 0.4.2 [2011-05-19]
