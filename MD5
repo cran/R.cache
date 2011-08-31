@@ -1,4 +1,4 @@
-5c0c826d74e4636fc2f1c8737ceda82d *DESCRIPTION
+587a0377d996dcea5330d3a59edea8aa *DESCRIPTION
 be57e69f8a31ee3fe193df8699d1b812 *NAMESPACE
 e5c65f1a877139edc6966b4462485d1e *R/000.R
 d1d9ffd83d435ddb89e15c9c492df7bd *R/006.fixVarArgs.R
@@ -15,7 +15,7 @@ ebcf6f2ad4e63afe296a34884218e5ce *R/getCachePath.R
 f99923879b2743f6186d140ab4752c85 *R/getChecksum.R
 662f4ff49d1eed317a9f3d95e37532d6 *R/loadCache.R
 c5400384b317a730d4016ab108c21aea *R/memoizedCall.R
-bd4c400e643a16ef26805122079d9cc7 *R/private.baseLoad.R
+4c6553913a7f13dcb73b088021ee2aa7 *R/private.baseLoad.R
 a670c63a136e66ca72492de1e1f1d95d *R/readCacheHeader.R
 572637ac98f5d1b9fe8c73b9a886fc05 *R/saveCache.R
 c8d8e3240232033d1cd01b948a8c9c6b *R/setCachePath.R
@@ -25,7 +25,7 @@ fb84e7ae933e70da74b11e562d8c4051 *R/zzz.R
 1a4b2858abaa52ed9fced9105fb92466 *incl/evalWithMemoization.Rex
 4f1850dc4a790d2082e7fcf3b45ddc7e *incl/loadCache.Rex
 73aab5d64022ff8d6719002ec6be1b33 *incl/readCacheHeader.Rex
-a12d4b3abf94796c3d632da8bcca200a *inst/NEWS
+08e74ddac48463a7f0fe87b22bea6855 *inst/NEWS
 4b8f745fd87b3d1cbf16593f3a1bd48b *man/Non-documented_objects.Rd
 89f5c29cf19fd24abb13f85b1558356c *man/R.cache-package.Rd
 94808b2cbcc4a954b9673e0dfb341a05 *man/addMemoization.Rd
