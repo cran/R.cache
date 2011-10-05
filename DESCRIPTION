@@ -1,6 +1,6 @@
 Package: R.cache
-Version: 0.5.1
-Date: 2011-08-31
+Version: 0.5.2
+Date: 2011-10-05
 Title: Fast and light-weight caching (memoization) of objects
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
@@ -13,6 +13,6 @@ Description: Methods for memoization, that is, caching arbitrary R
 License: LGPL (>= 2.1)
 URL: http://www.braju.com/R/
 LazyLoad: TRUE
-Packaged: 2011-08-31 15:30:29 UTC; hb
+Packaged: 2011-10-05 21:02:11 UTC; hb
 Repository: CRAN
-Date/Publication: 2011-09-01 06:24:46
+Date/Publication: 2011-10-06 08:45:50
