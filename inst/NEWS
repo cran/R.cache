@@ -2,6 +2,21 @@
 Package: R.cache
 ================
 
+Version: 0.6.5 [2012-11-18]
+o ROBUSTNESS: Now package declares S3 methods in the namespace.
+o CLEANUP: Now package exports a smaller set of the methods.  
+o CLEANUP: Package now only imports R.methodsS3 and R.oo, no long
+  depends (loads) them.  It still needs to load R.utils.
+o Added internal .assertDigest(), which originates from aroma.core.
+
+
+Version: 0.6.4 [2012-10-16]
+o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
+  R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
+  for you; missing documentation, a bug or just me?' on Oct 16, 2012.
+o Package now imports R.methodsS3 and R.oo.
+
+
 Version: 0.6.3 [2012-09-12]
 o Renamed the installed .Rcache/ directory to _Rcache/ to avoid
   R CMD check NOTEs.
