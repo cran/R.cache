@@ -20,11 +20,13 @@
  have the same checksum.
 }
 
-\usage{\method{getChecksum}{default}(object, ...)}
+\usage{
+\method{getChecksum}{default}(object, ...)
+}
 
 \arguments{
   \item{object}{The object for which a checksum should be calculated.}
-  \item{...}{Not used.}
+  \item{...}{Additional arguments passed to \code{\link[digest]{digest}}.}
 }
 
 \value{
@@ -44,10 +46,10 @@
   \code{getChecksum()} function.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
-  By default, the \code{\link[digest]{digest}} method is used to calculate
+  Internally, the \code{\link[digest]{digest}} method is used to calculate
   the checksum.
 }
 
