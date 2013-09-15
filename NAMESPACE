@@ -3,8 +3,24 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 importFrom("R.methodsS3", "setMethodS3")
 importFrom("R.methodsS3", "throw")
-import("R.oo")
-import("R.utils")
+
+importFrom("utils", "packageVersion")
+
+importFrom("R.oo", "Package")
+importFrom("R.oo", "startupMessage")
+importFrom("R.oo", "getPosition")
+importFrom("R.oo", "attachLocally")
+importFrom("R.oo", "trim")
+importFrom("R.oo", "clearCache")
+
+importFrom("R.utils", "Arguments")
+importFrom("R.utils", "listDirectory")
+importFrom("R.utils", "isAbsolutePath")
+importFrom("R.utils", "isDirectory")
+importFrom("R.utils", "isFile")
+importFrom("R.utils", "removeDirectory")
+importFrom("R.utils", "mkdirs")
+importFrom("R.utils", "touchFile")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -23,9 +39,7 @@ export("readCacheHeader")
 export("loadCache")
 export("saveCache")
 export("getChecksum")
-
-# To remove in R.cache (> 0.7.0)
-export("generateCache")
+export("clearCache")  # Imported from R.oo
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
