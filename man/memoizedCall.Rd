@@ -18,8 +18,7 @@
 }
 
 \usage{
-\method{memoizedCall}{default}(what, ..., envir=parent.frame(), force=FALSE, sources=NULL, dirs=NULL,
-  verbose=FALSE)
+\method{memoizedCall}{default}(what, ..., envir=parent.frame(), force=FALSE, sources=NULL, dirs=NULL)
 }
 
 \arguments{
@@ -31,11 +30,15 @@
   \item{force}{If \code{\link[base:logical]{TRUE}}, any cached results are ignored, otherwise not.}
   \item{sources, dirs}{Optional arguments passed to
     \code{\link{loadCache}}() and \code{\link{saveCache}}().}
-  \item{verbose}{If \code{\link[base:logical]{TRUE}}, verbose statements are outputted.}
 }
 
 \value{
   Returns the result of the function call.
+}
+
+\details{
+  If the \code{\link[base]{function}} returns \code{\link[base]{NULL}}, that particular function call is
+  \emph{not} memoized.
 }
 
 \author{Henrik Bengtsson}

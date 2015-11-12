@@ -3,7 +3,7 @@
   onDiff <- match.arg(onDiff);
 
   # Value to validate against
-  d1 <- digest::digest(0);
+  d1 <- digest(0);
   # Get the "truth"
   ver <- packageVersion("digest");
   if (ver <= "0.2.3") {
@@ -24,7 +24,7 @@
     } else if (onDiff == "warning") {
       warning(msg);
     } else {
-      cat(msg);
+      message(msg);
     }
   }
 } # .assertDigest()

@@ -18,7 +18,7 @@
 
 \usage{
 \method{saveCache}{default}(object, key=NULL, sources=NULL, suffix=".Rcache", comment=NULL, pathname=NULL,
-  dirs=NULL, compress=getOption("R.cache::compress"), ...)
+  dirs=NULL, compress=getOption("R.cache::compress", FALSE), ...)
 }
 
 \arguments{
@@ -46,12 +46,6 @@
 
 \value{
   Returns (invisible) the pathname of the cache file.
-}
-
-\section{Requirements}{
- To make use of the \code{key} argument, the \emph{digest} package
- (available on CRAN) must be installed, otherwise an error is generated.
- That package is not required when \code{key==NULL}.
 }
 
 \section{Compression}{
